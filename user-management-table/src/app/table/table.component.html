@@ -1,0 +1,65 @@
+<h2>User Management</h2>
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>ID</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Age</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let user of users; let i = index">
+      <tr class="clickable-row">
+        <td class="tcw-30 text-center">
+          <a
+            class="rowToggler"
+            [ngClass]="user.isShow ? 'open' : ''"
+            (click)="toggleExpandableRow(i)"
+          >
+            <div class="toggler-arrow"></div>
+          </a>
+        </td>
+        <td>{{ user.id }}</td>
+        <td>{{ user.firstName }}</td>
+        <td>{{ user.lastName }}</td>
+        <td>{{ user.age }}</td>
+      </tr>
+      <tr *ngIf="user.isShow">
+        <td></td>
+        <td colspan="7">
+          <div class="input-row">
+            <div class="input-group">
+              <label for="editId">ID:</label>
+              <input id="editId" [(ngModel)]="user.id"/>
+            </div>
+            <div class="input-group">
+              <label for="editFirstName">First Name:</label>
+              <input id="editFirstName" [(ngModel)]="user.firstName"/>
+            </div>
+          </div>
+          <div class="input-row">
+            <div class="input-group">
+              <label for="editLastName">Last Name:</label>
+              <input id="editLastName" [(ngModel)]="user.lastName"/>
+            </div>
+            <div class="input-group">
+              <label for="editAge">Age:</label>
+              <input id="editAge" [(ngModel)]="user.age"/>
+            </div>
+          </div>
+          <div class="button-group">
+            <button [disabled]="user.isSaving" (click)="saveUser(user)">
+              <span *ngIf="user.isSaving; else saveText">
+                <div class="spinner"></div>
+              </span>
+              <ng-template #saveText>Save</ng-template>
+            </button>
+            <button [disabled]="user.isSaving" (click)="cancelUser(user)">Cancel</button>
+          </div>
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
